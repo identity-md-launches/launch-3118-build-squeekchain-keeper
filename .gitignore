@@ -1,0 +1,8 @@
+# Explicit submission path budgets are recorded in artifacts/path-budget.md.
+**/node_modules/
+**/.cache/
+**/.vite/
+**/.npm/
+**/coverage/
+**/*.tsbuildinfo
+/test/scratch/
