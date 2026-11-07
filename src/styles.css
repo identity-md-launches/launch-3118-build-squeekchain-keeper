@@ -94,7 +94,6 @@ nav a:hover { color: var(--text); }
 .paper-strip svg { margin-inline-end: 4px; color: var(--muted); }
 .optimizer { padding-block-start: 20px; }
 .optimizer-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-block-end: 24px; }
-.optimizer-header p { margin-block-start: 8px; font-size: var(--text-sm); }
 .paper-label { display: inline-flex; align-items: center; gap: 7px; color: var(--success); font-size: var(--text-sm); white-space: nowrap; }
 .optimizer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .position-panel, .merge-panel { padding: 24px 28px; min-width: 0; }
@@ -263,7 +262,6 @@ footer .text-button { margin-inline-start: auto; white-space: nowrap; font-size:
   .optimizer { padding-block-start: 12px; }
   .optimizer-header { gap: 8px; margin-block-end: 20px; }
   .optimizer-header h2 { font-size: var(--text-lg); }
-  .optimizer-header p { font-size: var(--text-sm); }
   .paper-label { font-size: var(--text-xs); gap: 5px; }
   .position-panel, .merge-panel, .exit-panel { padding: 20px; }
   .field-grid { gap: 20px 12px; }
@@ -291,4 +289,6 @@ footer .text-button { margin-inline-start: auto; white-space: nowrap; font-size:
 }
 @media (max-width: 360px) {
   .wallet-button > svg { display: none; }
+  .merge-art { gap: 8px; }
+  .hamster-pair svg { width: 56px; height: 58px; }
 }

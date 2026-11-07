@@ -71,21 +71,25 @@ One connect control discovers named browser wallets through EIP-6963 and hides t
 
 ## Validation performed
 
-On 2026-11-07:
+Revision checks on 2026-11-07 reproduced the reported 324px page width at a 320px viewport and the two optimizer taglines before editing. The fix narrows the illustration at 360px and below, removes the optimizer subtitle and names the comparison “Compare a merge”. The paper-mode safety text remains beside the calculator.
 
 | Command / check | Actual result |
 | --- | --- |
+| `npm run setup` | Installed the locked dependencies in scratch; root manifest and lockfile unchanged |
 | `npm run typecheck` | Passed, TypeScript no-emit check |
 | `npm run test` | Passed, 21 math and API validation tests |
 | `npm run test:interactions` | Passed, 20 React DOM interactions with synthetic public API/RPC and EIP-6963 responses |
 | `npm run build` | Passed, complete Vite production export |
-| `node scripts/check-export.mjs` | Passed, all 13 export files served from a nested static subpath; 5 relative asset references and required metadata verified |
-| Public REST endpoints | Core, status and economy returned HTTP 200; actual schemas were inspected |
-| Public RPC endpoints | Primary and fallback returned HTTP 403 from this environment; no real contract simulation/transaction was certified |
-| Pinned `taste.mjs --out test/scratch/taste` | Attempted, exit 2 before measurement: Chromium could not launch |
-| Supplied browser tool | Attempted; Chromium failed with “Socket path too long” |
-| Local Playwright fallback | Attempted with supplied and separately installed Chromium; launch terminated with SIGTRAP. WebKit installation reported missing system libraries |
+| `node scripts/check-export.mjs` | Passed, all 13 export files served from a nested static subpath; 5 relative asset references and required metadata verified; export 875,494 bytes |
+| Pinned taste probe, command below | Passed 16/16 checks, including layout and copy; baseline was 14/16 |
+| Local Playwright Chromium, production export at `/nested/static/` | No horizontal scroll at 320, 360, 361, 390, 780, 1040 or 1440px. At 320px the illustration fits x=36–284 inside the panel. Screenshots inspected at 320, 390 and 1440px; product and Checkpoint visible on the first 390×844 screen |
+| Rendered Chromium interactions, external requests blocked | Passed level/power updates, invalid amount, reset, maximum level, bank-run/quiet fee comparisons, unavailable API as unknown, checkpoint wallet picker, Escape/focus restoration and reduced motion; no script errors or failed local assets |
+| Supplied browser connector / WebKit | Connector failed with “Socket path too long”; local Chromium fallback succeeded. WebKit executable unavailable |
 
-The interaction suite checks paper-mode arithmetic, invalid inputs, merge caps, fee examples, API loss/recovery, wallet discovery, wrong-chain blocking, switching, transaction review, exact checkpoint calldata/destination/sender, a simulated confirmed receipt and a rejected signature. It uses Happy DOM, **not a rendered browser**. No actual wallet was connected and no real transaction was signed or sent. Browser screenshots, rendered reflow/overlap, physical-device behavior, actual font rendering, native modal focus and screen-reader use remain unverified. The 390px first-screen layout is implemented but could not be visually certified. The share image was rasterized from original SVG and visually inspected; it is not a website screenshot.
+```sh
+IMD_PLAYWRIGHT=/opt/imd-tools/playwright-mcp/node_modules/playwright/index.mjs PLAYWRIGHT_BROWSERS_PATH=/opt/imd-tools/ms-playwright node .imd/reads/skills/design-critic/scripts/taste.mjs --out test/scratch/taste
+```
 
-See [DESIGN.md](DESIGN.md), the six-domain [review and limitations](artifacts/validation.md), and the explicit [submission path budget](artifacts/path-budget.md). These are worker checks, not independent certification.
+The DOM interaction suite additionally checks API loss/recovery, named wallet discovery, wrong-chain blocking, switching, transaction review, exact checkpoint calldata/destination/sender, a simulated confirmed receipt and rejected signing. It uses Happy DOM and synthetic responses; it does not certify a real transaction. The rendered browser checks used the built export with external requests blocked, while the taste probe allowed public requests and displayed unavailable values as unknown. Live API/RPC correctness was not revalidated in this layout/copy revision. No real wallet was connected or transaction sent. WebKit, phone app handoffs, Coinbase passkeys, physical devices, screen readers, native 200% zoom and a full keyboard audit remain unverified.
+
+See [DESIGN.md](DESIGN.md) and the six-domain [revision review and limitations](artifacts/validation.md). Finding dispositions are in `.imd-responses.json`. These are worker checks, not independent certification.

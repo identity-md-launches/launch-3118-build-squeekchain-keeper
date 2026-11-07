@@ -4,7 +4,7 @@
 
 A compact dashboard for Sepolia keepers and people comparing staking scenarios. A small original hamster is the recurring visual idea. Charcoal surfaces, warm amber actions and quiet green comparison results keep the tool readable without a marketing hero. The keeper precedes the optimizer in DOM order. The checkpoint is the one filled primary action; the wallet control is outlined.
 
-Source of truth: `src/styles.css`, followed by `src/components/` and `src/App.tsx`. The rules below describe the final source. Browser rendering could not be verified because the supplied browser and local Chromium fallback failed to launch; this document does not claim screenshot confirmation.
+Source of truth: `src/styles.css`, followed by `src/components/` and `src/App.tsx`. The rules below describe the final source. The revision was rendered in local Playwright Chromium at 320, 360, 361, 390, 780, 1040 and 1440px; the supplied browser connector could not launch. See `artifacts/validation.md` for evidence and remaining limitations.
 
 ## Colors
 
@@ -32,7 +32,7 @@ Computed **declared solid-color** contrast: primary text/surface 14.75:1, muted/
 
 ## Typography
 
-Local `public/fonts/dm-sans-latin.woff2` supplies DM Sans, with Segoe UI and sans-serif fallbacks. The declared variable weight range is 400–600; the interface uses 400 and 600. Browser font loading was not observed. Code uses the system monospace stack only for formulas and method names.
+Local `public/fonts/dm-sans-latin.woff2` supplies DM Sans, with Segoe UI and sans-serif fallbacks. The declared variable weight range is 400–600; the interface uses 400 and 600. Chromium's font loading check passed after `document.fonts.ready`. Code uses the system monospace stack only for formulas and method names.
 
 Exactly six size tokens: 13px captions, 14px dense labels/supporting copy, 16px body/inputs, 20px panel headings/brand, 28px section headings/numeric results, 40px desktop headline/issuance. Mobile inputs remain 16px. Desktop h1 becomes 28px below 780px. Body line height is 1.5; h1 1.15; h2 and large figures 1.2; h3 1.3. Heading tracking ranges from −0.015em to −0.035em; ordinary text has natural spacing. Changing numbers use tabular numerals. Addresses and amounts wrap instead of clipping. Paragraphs use pretty wrapping, headings balanced wrapping, and explanatory paragraphs stay within 65ch where applicable.
 
@@ -45,9 +45,11 @@ Exactly six size tokens: 13px captions, 14px dense labels/supporting copy, 16px 
 - At 780px: navigation and intro artwork disappear; keeper/checkpoint and optimizer panels stack. The checkpoint amount and button share a compact row. Exit comparison and chart stack. Inline margins become 20px.
 - At 640px: the dialog becomes a full-width bottom sheet, with safe-area bottom padding and constrained viewport height.
 - At 540px: inline margins are 16px; panel padding 20px; exit input-source control gets its own row; custom inputs and explanations stack. The brand is compact and the header network label is removed; Sepolia remains explicit in the transaction and wallet flows.
-- At 360px: the wallet button's decorative icon disappears to leave room for a connected address.
+- At 360px and below: the wallet button's decorative icon disappears to leave room for a connected address. The merge illustration gap becomes 8px and each paired hamster becomes 56×58px; together with the overlapping pair, arrow and 108px survivor, the row fits the 248px content width at a 320px viewport (`src/styles.css:290`).
 
-The mobile first screen is designed to include brand, product heading, keeper metrics and Checkpoint. Actual 320/390/1440px geometry, 200% native zoom, RTL and translated-string layouts were not rendered. Grid children use `minmax(0, 1fr)` or `min-width: 0`; critical hashes and quantities have `overflow-wrap: anywhere`.
+The 390×844px Chromium first screen includes brand, product heading, keeper metrics and Checkpoint; the button spans approximately y=584–632px in the disconnected, unavailable-data state. No horizontal overflow was measured at 320, 360, 361, 390, 780, 1040 or 1440px. Native 200% zoom, RTL and translated-string layouts remain unverified. Grid children use `minmax(0, 1fr)` or `min-width: 0`; critical hashes and quantities have `overflow-wrap: anywhere`.
+
+The optimizer heading leads directly into its panels, without a promotional subtitle. Its comparison is labeled “Compare a merge” (`src/components/Optimizer.tsx:38`). The paper-mode notice and illustrative-input explanation remain next to the calculator. Removing the subtitle moves the panels up 29px at 390px and 1440px without leaving an empty row.
 
 ## Elevation & depth
 
@@ -65,7 +67,7 @@ Panels use `--radius: 16px`; inputs and buttons use 8px. The modal uses 20px; on
 | `components/Optimizer.tsx` | Native labeled level select and amount/count inputs; inline validation; result definitions; one-pair merge comparison; maximum-level/insufficient-pair states; native details for formulas. |
 | `components/ExitFees.tsx` | Same-column now/later comparison, explicit public/custom input source, quiet/bank-run presets, labeled illustrative SVG curve, assumptions and fee explanation. |
 | `components/Wallet.tsx` | One header control, named EIP-6963 rows with icons, mobile app links, Coinbase row, short connected address with full address in the dialog, switch/disconnect and recoverable failures. |
-| `components/Modal.tsx` | Native `dialog.showModal()`, labeled heading, close control, Escape/backdrop dismissal, scroll lock and restoration of the triggering element. Native focus trapping/inert behavior needs browser verification. |
+| `components/Modal.tsx` | Native `dialog.showModal()`, labeled heading, close control, Escape/backdrop dismissal, scroll lock and restoration of the triggering element. Chromium confirmed focus enters the wallet sheet, Escape closes it and focus returns to Checkpoint. Full focus-trap cycling and screen-reader behavior remain unverified. |
 | `components/Icon.tsx` | Decorative `currentColor` stroke SVG, normally 16–20px. Buttons retain visible names or accessible labels. |
 | `components/Hamster.tsx` | Original hamster vector; optional wheel frame for intro artwork. Decorative and hidden from accessibility APIs. |
 | `src/styles.css` | `.primary`, `.secondary`, `.text-button`, `.icon-button`, `.field`, `.panel`, `.status-badge`, `.paper-label` are the shared styling patterns. |

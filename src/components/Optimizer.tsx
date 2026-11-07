@@ -15,7 +15,7 @@ export function Optimizer({ network }: { network: Network }) {
   const merge = valid ? mergeScenario(level, count, stake!) : null;
   const cooldown = level < 10 ? network.economy?.cooldowns[level] : undefined;
   return <section id="optimizer" className="optimizer" aria-labelledby="optimizer-heading">
-    <div className="optimizer-header"><div><h2 id="optimizer-heading">Staking optimizer</h2><p className="muted">Try a position. See what changes.</p></div><span className="paper-label"><Icon name="seed" size={16} />Paper mode</span></div>
+    <div className="optimizer-header"><div><h2 id="optimizer-heading">Staking optimizer</h2></div><span className="paper-label"><Icon name="seed" size={16} />Paper mode</span></div>
     <div className="optimizer-grid">
       <section className="position-panel panel" aria-labelledby="position-heading">
         <div className="section-top"><h3 id="position-heading">Your scenario</h3><button className="text-button" onClick={() => { setLevel(1); setCountText('2'); setStakeText('40000'); }}>Reset</button></div>
@@ -35,7 +35,7 @@ export function Optimizer({ network }: { network: Network }) {
         <details className="formula-details"><summary>How power is calculated</summary><p className="small muted">One Level {level} Squeek has {one.toLocaleString('en-US')} power. P is the sum of all Squeeks in this scenario.</p><code>power = round(1000 × 2.2^(L − 1))</code><code>Q = S / 40 × (1 + P / 1000)</code><p className="small muted">This is power, not an earnings or price forecast.</p></details>
       </section>
       <section className="merge-panel panel" aria-labelledby="merge-heading">
-        <div className="section-top"><h3 id="merge-heading">Merge two. Power up.</h3><Icon name="bolt" /></div>
+        <div className="section-top"><h3 id="merge-heading">Compare a merge</h3><Icon name="bolt" /></div>
         <p className="small muted">Compare one merge within your scenario.</p>
         <div className="merge-art" aria-hidden="true"><div className="hamster-pair"><Hamster /><Hamster /></div><Icon name="arrow" size={24} /><Hamster className="merged-hamster" /></div>
         <div className="merge-labels"><span>2 × Level {level}</span><span>{level < 10 ? `1 × Level ${level + 1}` : 'Level cap reached'}</span></div>
